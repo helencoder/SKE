@@ -1,0 +1,8 @@
+# 此为注释 – 将被 Git 忽略
+
+
+*.txt           # 忽略所有 .txt 结尾的文件
+#!lib.txt       # 但 lib.txt 除外
+corpus/         # 忽略 corpus/ 目录下的所有文件
+segFile/        # 忽略 segFile/ 目录下的所有文件
+tfidfFiele/     # 忽略 segFile/ 目录下的所有文件
