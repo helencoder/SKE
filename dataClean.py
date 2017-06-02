@@ -46,7 +46,8 @@ def dict_write(data, fileName, path, mode = 'a+'):
     for word in data:
         fileObject.write(word)
         fileObject.write(' ')
-        fileObject.write('1')
+        # 字典中词频越高,成词概率越大
+        fileObject.write('4')
         fileObject.write(' ')
         fileObject.write('n')
         fileObject.write('\n')
