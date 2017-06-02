@@ -31,6 +31,10 @@ def dict_write(data, fileName, path, mode = 'a+'):
     fileObject = codecs.open(filePath, mode, 'utf-8')
     for word in data:
         fileObject.write(word)
+        fileObject.write(' ')
+        fileObject.write('1')
+        fileObject.write(' ')
+        fileObject.write('n')
         fileObject.write('\n')
     fileObject.close()
 
