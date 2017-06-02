@@ -1,0 +1,5 @@
+*.txt
+*.pyc
+corpus/
+segFile/
+tfidfFile/
