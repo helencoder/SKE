@@ -35,7 +35,9 @@ def word_segmentation(fileName, path):
     # jieba.analyse.set_stop_words('dict_file/stop_words.txt')
     stopWords = [line.strip().decode('utf-8') for line in open('dict_file/stop_words.txt').readlines()]
     # 加载分词字典
-    jieba.load_userdict("dict_file/dict.txt.big")
+    jieba.set_dictionary("dict_file/dict.txt.big")
+    # 加载用户自定义词典
+    jieba.load_userdict("dict_file/user_dict.txt")
     # 获取文件数据
     fileData = fileHandle.get_file_data(fileName, path)
     # jieba分词&词性标注
@@ -65,11 +67,11 @@ def word_segmentation(fileName, path):
 if __name__ == "__main__":
     pass
     curPath = fileHandle.get_cur_path()
-    fileName = 'article.txt'
+    fileName = 'article2.txt'
     wordsStatisticsData, wordsData = word_segmentation(fileName, curPath)
 
     # 进行词语位置的查找测试
-    print json.dumps(wordsStatisticsData, ensure_ascii=False)
+    # print json.dumps(wordsStatisticsData, ensure_ascii=False)
     print json.dumps(wordsData, ensure_ascii=False)
 
     # # 词语位置和词语词性
