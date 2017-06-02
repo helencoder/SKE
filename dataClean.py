@@ -24,6 +24,20 @@ def dict_read(fileName, path):
         dictDatas.append(word)
     return dictDatas
 
+# jieba字典文件读取
+def jieba_dict_read():
+    path = 'dict_file/'
+    fileName = 'dict.txt.big'
+    filePath = os.path.join(path, fileName)
+    dictFileObject = open(filePath, 'r')  # 进行分词文件的读取
+    dictDatas = []
+    for line in dictFileObject:
+        wordStr = line.strip('\n')  # 去除换行符
+        wordData = wordStr.split(' ')
+        word = wordData[0]
+        dictDatas.append(word)
+    return dictDatas
+
 # 字典文件写入
 # 默认方式：追加
 def dict_write(data, fileName, path, mode = 'a+'):
@@ -40,13 +54,22 @@ def dict_write(data, fileName, path, mode = 'a+'):
 
 if __name__ == "__main__":
     pass
-    # 进行进一步处理
+    # 进行进一步处理（对于其中已经存在于jieba字典中的进行剔除）
     fileName = 'user_dict_back.txt'
     path = 'dict_file/'
     wordDatas = dict_read(fileName, path)
     print len(wordDatas)
     processedWordDatas = list(set(wordDatas))
+    jiebaDictWordDatas = jieba_dict_read()
+    writeData= []
+    for word in processedWordDatas:
+        if word in jiebaDictWordDatas:
+            print word
+            pass
+            #processedWordDatas.remove(word)
+        else:
+            writeData.append(word)
 
     fileName = 'user_dict.txt'
-    dict_write(processedWordDatas, fileName, path, mode='r+')
+    dict_write(writeData, fileName, path, mode='r+')
     # print fileData
