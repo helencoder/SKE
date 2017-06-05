@@ -49,13 +49,35 @@ def wordEncoding(word ,data = cilinCodeDatas):
     else:
         cilinDatas = cilin()
     wordEncodingDatas = []
+    # 新词检测标记(新词为False,否则为True)
+    flag = False
+    wordNewEncodingDatas = []
     for k, v in cilinDatas.iteritems():
         # 此处对于《同义词词林》中不存在的单词进行了过滤
         # 对于自定义词库中的标签进行操作
-
+        # 对于新词(存在于自定义标签库中)的处理：将所有编码均赋予它，这样其与其他单词的语义相似度均为1，不会影响其产生
+        wordNewEncodingDatas.append(k)
         if str(word) in v:
+            flag = True
             wordEncodingDatas.append(k)
     return wordEncodingDatas
+    # if flag:
+    #     return wordEncodingDatas
+    # else:
+        # 对于是否存在于自定义标签库中，进行检测
+        # userdictFilePath = 'dict_file/user_dict.txt'
+        # userdictFileObject = open(userdictFilePath, 'r')  # 进行分词文件的读取
+        # 存在True，否则为False
+        # tagFlag = False
+        # for line in userdictFileObject:
+        #     data = line.strip('\n')  # 去除换行符
+        #     if str(word) in data:
+        #         tagFlag = True
+        #         break
+        # if tagFlag:
+        #     return wordNewEncodingDatas
+        # else:
+        #     return wordEncodingDatas
 
 
 # 进行词语间语义相似度计算
@@ -181,20 +203,23 @@ def intermediaryDegreeScore(word, shortestDatas):
                 pass
             else:
                 # 计算两个顶点间的最短路径数(此处可能有歧义)
-                path = shortestDatas[m][k]['path']
-                # 此处有两种处理逻辑，一种是利用距离，一种是利用路径数
-                # 暂时使用路径数
-                routes = path.split('->')  # 至少为2
-                routesNum = len(routes)
-                distances = shortestDatas[m][k]['distance']
-                if word in path:
-                    # 使用路径数
-                    score = 1 / (routesNum - 1)
-                    # 使用路径距离
-                    # score = 1 / distances
-                else:
-                    score = 0
-                Score += score
+                try:
+                    path = shortestDatas[m][k]['path']
+                    # 此处有两种处理逻辑，一种是利用距离，一种是利用路径数
+                    # 暂时使用路径数
+                    routes = path.split('->')  # 至少为2
+                    routesNum = len(routes)
+                    distances = shortestDatas[m][k]['distance']
+                    if word in path:
+                        # 使用路径数
+                        score = 1 / (routesNum - 1)
+                        # 使用路径距离
+                        # score = 1 / distances
+                    else:
+                        score = 0
+                    Score += score
+                except:
+                    Score = 0
     return Score
 
 

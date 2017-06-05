@@ -17,6 +17,11 @@ sys.setdefaultencoding('utf8')
 import jieba
 import jieba.posseg as pseg
 
+# 加载分词字典
+jieba.set_dictionary("dict_file/dict.txt.big")
+# 加载用户自定义词典
+jieba.load_userdict("dict_file/user_dict.txt")
+
 # 加载自定义模块
 import fileHandle
 
@@ -34,10 +39,7 @@ def word_segmentation(fileName, path):
     # 加载停用词文件
     # jieba.analyse.set_stop_words('dict_file/stop_words.txt')
     stopWords = [line.strip().decode('utf-8') for line in open('dict_file/stop_words.txt').readlines()]
-    # 加载分词字典
-    jieba.set_dictionary("dict_file/dict.txt.big")
-    # 加载用户自定义词典
-    jieba.load_userdict("dict_file/user_dict.txt")
+
     # 获取文件数据
     fileData = fileHandle.get_file_data(fileName, path)
     # jieba分词&词性标注
@@ -51,7 +53,8 @@ def word_segmentation(fileName, path):
     title = fileHandle.get_file_line_details(fileName, path)
     # 词性过滤&停用词过滤
     for data in psegDataList:
-        if data.flag in set(ALLOW_SPEECH_TAGS) and data.word not in stopWords:
+        # 添加单词长度限制(至少为2)
+        if data.flag in set(ALLOW_SPEECH_TAGS) and data.word not in stopWords and len(data.word) > 1:
             wordsData.append(data.word)
             # 进行词语位置&词性记录（此处还需补充段首,段尾）
             if data.word in title:
