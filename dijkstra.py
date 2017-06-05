@@ -58,13 +58,20 @@ def dijkstra(G, startNode):
                         # 最短路径记录
                         tmpPath = tail + '->' + head
         # 查找到距离已标记顶点集合中的最近的邻接点，并标记记录
+
+
+        # 会存在
         # 在未标记顶点集中移除
-        unprocessed.remove(closest_head)
-        # 添加新的标记点
-        shortest_distances[closest_head] = length
-        # 最短路径记录
-        flagList = tmpPath.split('->')
-        path[closest_head] = path.get(flagList[0]) + '->' + flagList[1]
+        if closest_head != 0:
+            unprocessed.remove(closest_head)
+            # 添加新的标记点
+            shortest_distances[closest_head] = length
+            # 最短路径记录
+            flagList = tmpPath.split('->')
+            path[closest_head] = path.get(flagList[0]) + '->' + flagList[1]
+        else:
+            unprocessed.pop()
+
 
     # in case G is not fully connected
     for vertex in unprocessed:
