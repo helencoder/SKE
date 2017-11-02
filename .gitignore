@@ -3,3 +3,5 @@
 corpus/
 segFile/
 tfidfFile/
+*.xls
+.idea/

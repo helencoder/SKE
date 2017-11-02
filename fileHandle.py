@@ -20,7 +20,8 @@ def get_file_data(filename, path):
         pass
         return ''
     finally:
-        fileObject.close()
+        pass
+        # fileObject.close()
 
 # 获取文件目录
 def get_file_list(path):
@@ -41,7 +42,22 @@ def get_file_line_details(filename, path):
     filePath = os.path.join(path, filename)
     file = codecs.open(filePath, 'r', 'utf-8')
     text = file.readline()
-    return str(text).strip()
+    return text
+
+# 获取文件第三行数据
+def get_file_third_line_details(filename, path):
+    if not path:
+        path = get_cur_path()
+    filePath = os.path.join(path, filename)
+    file = codecs.open(filePath, 'r', 'utf-8')
+    count = 1
+    while count < 6:
+        text = file.readline()
+        if count == 5:
+            tag = text
+            break
+        count += 1
+    return tag
 
 # 写文件操作(默认为追加)
 def write_file(filename, data, mode = 'a+'):
@@ -50,7 +66,7 @@ def write_file(filename, data, mode = 'a+'):
     fileObject = codecs.open(filePath, mode, 'utf-8')
     fileObject.write(str(data))
     fileObject.write('\n\n')
-    fileObject.close()
+    # fileObject.close()
 
 # 获取当前文件路径
 def get_cur_path():

@@ -112,6 +112,7 @@ if __name__ == "__main__":
     fileName = 'article2.txt'
     keywords, keypharses, abstract = details(fileName, path)
     print keywords
+    print keypharses
     # path = file_handle.get_lib_file('stopwords.txt')
     # print(path)
 
